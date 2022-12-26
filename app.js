@@ -31,7 +31,7 @@ export const run = async () => {
   app.use(bodyParser.json());
   app.use(cookieParser()); // подключаем парсер кук как мидлвэр
 
-  connect('mongodb://127.0.0.1:27017/mestodb', {
+  connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }, (err) => {
@@ -41,11 +41,6 @@ export const run = async () => {
 
   app.use(requestLogger); // подключаем логгер запросов
 
-  app.get('/crash-test', () => {
-    setTimeout(() => {
-      throw new Error('Сервер сейчас упадёт');
-    }, 0);
-  });
   app.use(routes);
 
   app.use(errorLogger); // подключаем логгер ошибок
