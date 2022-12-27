@@ -11,7 +11,7 @@ import errorHandler from './middlewares/errorHandler.js';
 
 mongoose.set('strictQuery', false);
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3002 } = process.env;
 
 export const run = async () => {
   process.on('unhandledRejection', (err) => {
