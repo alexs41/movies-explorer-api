@@ -8,10 +8,17 @@ import cors from 'cors';
 import { requestLogger, errorLogger } from './middlewares/logger.js';
 import routes from './routes/index.js';
 import errorHandler from './middlewares/errorHandler.js';
+import rateLimit from 'express-rate-limit';
 
 mongoose.set('strictQuery', false);
 
-const { PORT = 3002 } = process.env;
+const { PORT, dbName, DB_PATH } = process.env;
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 1000, // Limit each IP to 1000 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
 
 export const run = async () => {
   process.on('unhandledRejection', (err) => {
@@ -20,6 +27,7 @@ export const run = async () => {
   });
 
   const app = express();
+  app.use(limiter);
   app.use(helmet());
   app.use(cors(
     {
@@ -31,7 +39,7 @@ export const run = async () => {
   app.use(bodyParser.json());
   app.use(cookieParser()); // подключаем парсер кук как мидлвэр
 
-  connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
+  connect(`${DB_PATH}${dbName}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }, (err) => {

@@ -9,7 +9,6 @@ const schemaDescription = Joi.string().required();
 const schemaImage = schemaURL.required();
 const schemaTrailerLink = schemaURL.required();
 const schemaThumbnail = schemaURL.required();
-const schemaOwner = Joi.object({ id: schemaObjectId }).required();
 const schemaMovieId = Joi.string().required();
 const schemaNameRU = Joi.string().required();
 const schemaNameEN = Joi.string().required();
@@ -25,7 +24,6 @@ const schemaBodyMovie = Joi.object({
   image: schemaImage,
   trailerLink: schemaTrailerLink,
   thumbnail: schemaThumbnail,
-  owner: schemaOwner,
   movieId: schemaMovieId,
   nameRU: schemaNameRU,
   nameEN: schemaNameEN,
