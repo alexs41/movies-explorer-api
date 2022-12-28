@@ -9,16 +9,12 @@ import { requestLogger, errorLogger } from './middlewares/logger.js';
 import routes from './routes/index.js';
 import errorHandler from './middlewares/errorHandler.js';
 import rateLimit from 'express-rate-limit';
+import rateLimitConfig from './utils/rateLimiterConfig.js';
 
 mongoose.set('strictQuery', false);
 
 const { PORT, dbName, DB_PATH } = process.env;
-const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 1000, // Limit each IP to 1000 requests per `window` (here, per 15 minutes)
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-})
+const limiter = rateLimit(rateLimitConfig);
 
 export const run = async () => {
   process.on('unhandledRejection', (err) => {

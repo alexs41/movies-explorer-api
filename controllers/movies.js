@@ -4,10 +4,15 @@ import {
   NotFoundError,
   BadRequestError,
 } from '../errors/index.js';
+import { 
+  notFoundErrorTextMovie,
+  serverErrorText,
+  badRequestErrorTextMovie,
+} from '../utils/constants.js';
 
-const notFoundError = new NotFoundError('Фильм не найдена');
-const serverError = new ServerError('Произошла ошибка сервера');
-const badRequestError = new BadRequestError('Некорректные данные.');
+const notFoundError = new NotFoundError(notFoundErrorTextMovie);
+const serverError = new ServerError(serverErrorText);
+const badRequestError = new BadRequestError(badRequestErrorTextMovie);
 
 export function getAllMovies(req, res, next) {
   Movie.find({ owner: req.user._id })

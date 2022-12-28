@@ -9,14 +9,20 @@ import {
   ConflictError,
   BadRequestError,
 } from '../errors/index.js';
+import { 
+  notFoundErrorTextUser,
+  serverErrorText,
+  badRequestErrorTextUser,
+  errorNotUniqueTextUser,
+} from '../utils/constants.js'; 
 
 dotenv.config();
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-const notFoundError = new NotFoundError('Пользователь не найден');
-const serverError = new ServerError('Произошла ошибка сервера');
-const badRequestError = new BadRequestError('Некорректные данные для пользователя.');
-const errorNotUnique = new ConflictError('Пользователь с такой почтой уже существует');
+const notFoundError = new NotFoundError(notFoundErrorTextUser);
+const serverError = new ServerError(serverErrorText);
+const badRequestError = new BadRequestError(badRequestErrorTextUser);
+const errorNotUnique = new ConflictError(errorNotUniqueTextUser);
 const UniqueErrorCode = 11000;
 
 export function getUserById(req, res, next) {
