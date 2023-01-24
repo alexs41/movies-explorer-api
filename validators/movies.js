@@ -9,7 +9,7 @@ const schemaDescription = Joi.string().required();
 const schemaImage = schemaURL.required();
 const schemaTrailerLink = schemaURL.required();
 const schemaThumbnail = schemaURL.required();
-const schemaMovieId = Joi.string().required();
+const schemaMovieId = Joi.number().required();
 const schemaNameRU = Joi.string().required();
 const schemaNameEN = Joi.string().required();
 
